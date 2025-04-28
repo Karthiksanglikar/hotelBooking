@@ -17,6 +17,7 @@ public class Appusers {
     private String email;
     private String mobile;
     private String password;
+    private String role;
 
     public Long getId() {
         return id;
@@ -25,6 +26,10 @@ public class Appusers {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getRole() { return role; }
+
+    public void setRole(String role) { this.role = role; }
 
     public String getUsername() {
         return username;
@@ -57,4 +62,5 @@ public class Appusers {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

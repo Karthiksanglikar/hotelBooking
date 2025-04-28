@@ -36,4 +36,9 @@ public class UserController {
         }else
             return new ResponseEntity<>("Invalid-User",HttpStatus.FORBIDDEN);
     }
+    @PostMapping("/signUp-PropertyOwner")
+    public ResponseEntity<?>createUsers(@RequestBody UserDto userDto){
+        userService.CreatePropertyOwner(userDto);
+        return new ResponseEntity <>("added successfully", HttpStatus.CREATED);
+    }
 }

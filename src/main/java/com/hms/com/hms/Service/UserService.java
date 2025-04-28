@@ -49,6 +49,7 @@ public class UserService {
             }
         String encryptpwd = BCrypt.hashpw(appuser.getPassword(), BCrypt.gensalt(5));
         appuser.setPassword(encryptpwd);
+        appuser.setRole("ROLE_USER");
         Appusers user1 = appusersRepository.save(appuser);
             return new ResponseEntity<>("Its added successfull go for next",HttpStatus.CREATED);
     }
@@ -64,6 +65,26 @@ public class UserService {
         }
     }
         return null;
+    }
+    public ResponseEntity<String> CreatePropertyOwner(UserDto userDto) {
+        Appusers appuser=convertToEntity(userDto );
+        Optional<Appusers> opemail = appusersRepository.findByEmail(appuser.getEmail());
+        if (opemail.isPresent()) {
+            return new ResponseEntity<>("Email id exists", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        Optional<Appusers> opuser = appusersRepository.findByUsername(appuser.getUsername());
+        if(opuser.isPresent()){
+            return new ResponseEntity<>("Username already exists", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        Optional<Appusers> opmobile = appusersRepository.findByMobile(appuser.getMobile());
+        if(opmobile.isPresent()){
+            return new ResponseEntity<>("Mobile already exist",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        String encryptpwd = BCrypt.hashpw(appuser.getPassword(), BCrypt.gensalt(5));
+        appuser.setPassword(encryptpwd);
+        appuser.setRole("ROLE_OWNER");
+        Appusers user1 = appusersRepository.save(appuser);
+        return new ResponseEntity<>("Its added successfull go for next",HttpStatus.CREATED);
     }
 
 }

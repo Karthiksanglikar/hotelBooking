@@ -25,7 +25,16 @@ public class SecurityConfig {
         httpSecurity.addFilterBefore(jwtFilter,AuthorizationFilter.class);
 
         //haap
-        httpSecurity.authorizeHttpRequests().anyRequest().permitAll();
+       // httpSecurity.authorizeHttpRequests().anyRequest().permitAll();
+
+        //only these 2 url can access permit all,other than this authenticated
+        httpSecurity.authorizeHttpRequests().
+                anyRequest().permitAll();
+//                requestMatchers("/api/v1/auth/login","/api/v1/auth/sign-up","/api/v1/auth/signUp-PropertyOwner","api/properties/searh-hotelsystem")
+//                .permitAll();
+//                .requestMatchers("/api/v1/country/addCountry","api/properties/searh-hotelsystem?CityName=ooty")
+//                .hasAnyRole("ADMIN","OWNER")
+//                .anyRequest().authenticated();
        return httpSecurity.build();
     }
 
